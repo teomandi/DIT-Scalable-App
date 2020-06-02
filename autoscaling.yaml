@@ -1,0 +1,22 @@
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: scalable-app
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: scalable-app
+  minReplicas: 1
+  maxReplicas: 10
+  # targetCPUUtilizationPercentage: 50
+  metrics:
+    - type: Pods
+      pods:
+        metricName: avg_request_time_ms
+        targetAverageValue: 1000
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 50

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scalable-app
+  labels:
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scalable-app
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: scalable-app
+        tier: backend
+    spec:
+      volumes:
+      - name: dir
+        hostPath:
+          path: /code
+      containers:
+      - name: scalable-app
+        image: teo/scalable-app
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+             cpu: 200m
+        volumeMounts:
+        - name: dir
+          mountPath: /code
+      initContainers:
+      - name: install
+        image: busybox
+        volumeMounts:
+        - name: dir
+          mountPath: /code
+        command:
+        - cp
+        - "-r"
+        - "/var/www/."
+        - "/code/scalable-app"
