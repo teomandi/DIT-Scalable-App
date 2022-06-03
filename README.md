@@ -4,6 +4,8 @@ Deploying and Scaling Laravel application on Kubernetes (k8s)
 A project created for the Cloud-Computing subject (2019-2020)
 from Theodors Mandilaras (cs2190018)
 
+*For more information read the InfiniteScale_project_report.pdf*
+
 ## Setup the environment
 ### Start minikube
 
